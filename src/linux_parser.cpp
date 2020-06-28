@@ -238,12 +238,12 @@ string LinuxParser::Ram(int pid) {
       while(linestream >> key >> value){
         if(key=="VmSize:"){
           ram = value;
-          return std::to_string(stoi(ram) / 1024);
-        }
+          ram = std::to_string(stoi(ram) / 1024);
+        }      
       }
     }
   }
-  return string("0"); 
+  return ram;
 }
 
 // TODO: Read and return the user ID associated with a process
