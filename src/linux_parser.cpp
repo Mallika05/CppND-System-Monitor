@@ -74,40 +74,30 @@ float LinuxParser::MemoryUtilization() {
   string key; 
   string value;
   float memUsed;
-  float memTotal;
-  float memFree; 
-  float memAvail;
+  float memTotal{1};
+  float memFree{0}; 
+  //float memAvail;
   float buffer;
-  float cache; 
-  float slab;
+  //float cache; 
+ //float slab;
   std::ifstream stream(kProcDirectory + kMeminfoFilename);
   if(stream.is_open()){
     while(std::getline(stream,line)){
       std::istringstream linestream(line);
       while(linestream >> key >> value){
         if(key=="MemTotal:"){
-          memTotal = stoi(value);
+          memTotal = stof(value);
         }
         else if(key=="MemFree:"){
-          memFree = stoi(value);
-        }
-        else if(key=="MemAvailable:"){
-          memAvail = stoi(value);
+          memFree = stof(value);
         }
         else if(key=="Buffers:"){
-          buffer = stoi(value);
-        }
-        else if(key=="Cached:"){
-          cache = stoi(value);
-        }
-        else if(key=="Slab:"){
-          slab = stoi(value);
+          buffer = stof(value);
         }
       }
     }
   }
-  memUsed = memTotal - memFree - memAvail - buffer - cache - slab;
-  memUsed = memUsed /memTotal;
+  memUsed = 1.0 - (memFree / (memTotal - buffer));
   return memUsed; 
 }
 
