@@ -63,7 +63,8 @@ string Process::User() {
 // TODO: Return the age of this process (in seconds)
 long Process::UpTime() { 
    long uptime = LinuxParser::UpTime(pid);
-   return uptime; 
+   long sys_uptime = LinuxParser::UpTime();
+   return sys_uptime - uptime;
 }
 
 // TODO: Overload the "less than" comparison operator for Process objsects

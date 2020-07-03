@@ -292,6 +292,6 @@ long LinuxParser::UpTime(int pid) {
       }
     }
   }
-  uptime = stol(value);
+  uptime = stol(value)/sysconf(_SC_CLK_TCK);
   return uptime; 
 }
